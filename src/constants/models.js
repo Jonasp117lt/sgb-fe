@@ -25,9 +25,9 @@ export const defaultPerson = () => ({
 
 export const defaultCustomer = () => ({
     id: '',
-    has_books: '',
-    debt: '',
-    person_id: '',
+    has_books: false,
+    debt: 0,
+    person: defaultPerson(),
 })
 
 export const defaultEmail = () => ({

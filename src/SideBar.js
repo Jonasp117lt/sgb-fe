@@ -33,9 +33,9 @@ const SideBar = () => {
     return <div>
         <Drawer type='permanent' anchor='right' open={openSideBar} onClose={() => setOpenSideBar(false)}>
             <List>
-                {links.map(link => {
+                {links.map((link, index) => {
                     return (
-                        <ListItem component={Link} to={link.path}>
+                        <ListItem component={Link} to={link.path} key={`key-${index + 1}`}>
                             <ListItemText>
                                 {link.name}
                             </ListItemText>

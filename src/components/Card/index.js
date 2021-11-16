@@ -7,9 +7,9 @@ const CustomCard = (props) => {
         content,
     } = props
     return (
-        <Card sx={{ height: 'max-content', padding: "1rem" }}>
-            <CardHeader title={title} sx={{ textAlign: 'start' }} />
-            <CardContent sx={{ textAlign: 'start', padding: 0}}>
+        <Card sx={{ height: 'max-content', padding: "30px" }}>
+            <CardHeader title={title} sx={{ textAlign: 'start', p: 0, mb: 2 }} variant='h2' />
+            <CardContent sx={{ textAlign: 'start', p: 0 }}>
                 {content}
             </CardContent>
         </Card>

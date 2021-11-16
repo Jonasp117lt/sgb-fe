@@ -42,3 +42,25 @@ export const persons = [
     createPerson('9', 'David', 'Saldaña', 'david.saldaña@gmail.com', '3354785478', 'Tonala 3053'),
     createPerson('10', 'Fernando', 'Martinez', 'fernando.martinez@gmail.com', '33456743256', 'Micho 0394'),
 ]
+
+const createCustomer = (id, person, debt, has_books) => ({
+    id,
+    person,
+    debt,
+    has_books,
+})
+
+export const single_customer = createCustomer('1', single_person, 50, 'si')
+
+export const customers = [
+    createCustomer('1', persons[0], 50, true),
+    createCustomer('2', persons[1], 60, false),
+    createCustomer('3', persons[2], 20, true),
+    createCustomer('4', persons[3], 40, true),
+    createCustomer('5', persons[4], 60, false),
+    createCustomer('6', persons[5], 20, true),
+    createCustomer('7', persons[6], 50, false),
+    createCustomer('8', persons[7], 70, false),
+    createCustomer('9', persons[8], 10, true),
+    createCustomer('10', persons[9], 30, true),
+]

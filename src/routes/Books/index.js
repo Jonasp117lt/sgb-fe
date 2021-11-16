@@ -4,7 +4,7 @@ import Datatable from "../../components/Datatable"
 import { bookHeaders } from '../../constants/tableHeaders'
 import { books } from '../../constants/mockupData'
 
-const Books = () => {
+export const Books = () => {
     const BooksTable = <Datatable title='Inventario' headers={bookHeaders} rows={books} noBorder />
     return (
         <Card
@@ -15,3 +15,4 @@ const Books = () => {
 }
 
 export default Books
+export * from './create'
