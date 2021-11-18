@@ -19,6 +19,8 @@ export const books = [
     createBook('7', 'Harry Potter y las Reliquias de la muerte', 'J.K. Rowling', '5', 'Salamandra', 3),
 ]
 
+export const select_books = books.map(({ id, name }) => ({ id, label: name }))
+
 const createPerson = (id, name, lastname, email, phone, address) => ({
     id,
     name,
@@ -63,4 +65,24 @@ export const customers = [
     createCustomer('8', persons[7], 70, false),
     createCustomer('9', persons[8], 10, true),
     createCustomer('10', persons[9], 30, true),
+]
+
+const createLoan = (id, book_num, book_ids, customer, start_date, end_date, active, debt) => ({
+    id,
+    book_num,
+    book_ids,
+    customer,
+    start_date,
+    end_date,
+    active,
+    debt,
+})
+
+export const single_loan = createLoan('1', 3, ['1', '2', '3'], single_customer, '2021-11-17T05:04:37.520Z', '2021-11-17T05:04:37.520Z', true, 20)
+
+export const loans = [
+    createLoan('1', 3, ['1', '2', '3'], customers[0], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 20),
+    createLoan('2', 4, ['2', '3', '4'], customers[1], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 15),
+    createLoan('3', 5, ['1', '2', '3', '4', '5'], customers[2], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 40),
+    createLoan('4', 2, ['4', '5'], customers[3], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 50),
 ]

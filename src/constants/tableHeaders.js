@@ -63,3 +63,42 @@ export const customerHeaders = [
         label: 'Adeudo',
     },
 ]
+
+export const loanHeaders = [
+    {
+        id: 'id',
+        numeric: false,
+        disablePadding: true,
+        label: '#',
+    },
+    {
+        id: 'customer_name',
+        numeric: false,
+        disablePadding: true,
+        label: 'Cliente',
+    },
+    {
+        id: 'start_date',
+        numeric: false,
+        disablePadding: true,
+        label: 'Fecha de préstamo',
+    },
+    {
+        id: 'end_date',
+        numeric: false,
+        disablePadding: true,
+        label: 'Fecha límite de entrega',
+    },
+    {
+        id: 'book_num',
+        numeric: false,
+        disablePadding: true,
+        label: 'No. de Libros',
+    },
+    {
+        id: 'debt',
+        numeric: false,
+        disablePadding: true,
+        label: 'Adeudo',
+    },
+]

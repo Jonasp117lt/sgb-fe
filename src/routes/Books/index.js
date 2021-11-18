@@ -16,3 +16,5 @@ export const Books = () => {
 
 export default Books
 export * from './create'
+export * from './update'
+export * from './read'

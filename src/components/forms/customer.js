@@ -81,6 +81,7 @@ const CustomerForm = props => {
                         name='debt'
                         value={customer.debt}
                         disabled
+                        type='number'
                     />
                 </Grid>
                 <Grid item xs={6}>

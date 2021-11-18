@@ -25,20 +25,20 @@ const HeaderTitle = styled.h2`
 
 const HeaderContent = ({ toggle }) =>
     <Toolbar>
-        <LogoContainer>
-            <Logo />
-        </LogoContainer>
-        <HeaderTitle>Sistema de Gestión de Biblioteca</HeaderTitle>
         <IconButton
             onClick={toggle}
             edge='end'
             color='inherit'
             aria-label='menu'
             size='large'
-            sx={{ marginLeft: 'auto' }}
+            sx={{ marginRight: '10px' }}
         >
             <MenuIcon />
         </IconButton>
+        <LogoContainer>
+            <Logo />
+        </LogoContainer>
+        <HeaderTitle>Sistema de Gestión de Biblioteca</HeaderTitle>
     </Toolbar>;
 
 

@@ -90,7 +90,7 @@ function EnhancedTableHead(props) {
                         </TableSortLabel>
                     </TableCell>
                 ))}
-                {(options.delete && options.read && options.update) && <TableCell
+                {(options.delete || options.read || options.update) && <TableCell
                     align={'right'}
                     padding={'none'}
                     sortDirection={false}
@@ -265,7 +265,7 @@ export default function EnhancedTable(props) {
                                                     {row[headCell.id]}
                                                 </TableCell>
                                             ))}
-                                            <TableCell
+                                            {(options.delete || options.read || options.update) && <TableCell
                                                 align={'right'}
                                                 padding={'none'}
                                                 sortDirection={false}
@@ -275,16 +275,16 @@ export default function EnhancedTable(props) {
                                                 >
                                                     <MenuIcon />
                                                 </IconButton>
-                                                {(options.delete && options.read && options.update) && <Menu
+                                                <Menu
                                                     open={openMenu === row.id}
                                                     anchorEl={anchorEl}
                                                     onClose={handleCloseMenu}
                                                 >
-                                                    <MenuItem><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>
-                                                    <MenuItem><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>
-                                                    <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>
-                                                </Menu>}
-                                            </TableCell>
+                                                    {options.read && <MenuItem><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
+                                                    {options.update && <MenuItem><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
+                                                    {options.delete && <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>}
+                                                </Menu>
+                                            </TableCell>}
                                         </TableRow>
                                     );
                                 })}

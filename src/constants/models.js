@@ -39,18 +39,19 @@ export const defaultEmail = () => ({
 export const defaultLoan = () => ({
     id: '',
     book_num: '',
-    book_ids: '',
-    customer_id: '',
+    book_ids: [],
+    customer: defaultCustomer(),
     start_date: '',
     end_date: '',
-    debt: '',
+    active: '',
+    debt: 0,
 })
 
 export const defaultReturn = () => ({
     id: '',
     loan_id: '',
     book_num: '',
-    book_ids: '',
+    book_ids: [],
     payment: '',
     date: '',
 })
