@@ -7,7 +7,7 @@ export const ReadBook = () => {
     const Form = <BookForm data={single_book} readOnly />
     return (
         <Card
-            title='Datos del cliente'
+            title='Datos del libro'
             content={Form}
         />
     )

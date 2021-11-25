@@ -2,6 +2,7 @@ import React from 'react'
 import { Grid, Typography, FormControlLabel, Checkbox, Button, Stack } from '@mui/material'
 import { defaultCustomer } from '../../constants/models'
 import TextField from '../../components/TextField'
+import { Link } from 'react-router-dom'
 import _ from 'lodash'
 
 const CustomerForm = props => {
@@ -23,6 +24,9 @@ const CustomerForm = props => {
     return (
         <Grid container>
             <Grid container item spacing={2} xs={8}>
+                {readOnly && <Grid item xs={12}>
+                    <Button color="primary" variant="outlined" component={Link} to={`/loans/create/${customer.id}`}>Solicitar préstamo</Button>
+                </Grid>}
                 <Grid item xs={12}>
                     <Typography>Datos Personales</Typography>
                 </Grid>

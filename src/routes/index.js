@@ -2,7 +2,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { Customers, CreateCustomer, UpdateCustomer, ReadCustomer } from './Customers'
 import { Books, CreateBook, UpdateBook, ReadBook } from './Books'
-import { Loans, CreateLoan } from './Loans'
+import { Loans, CreateLoan, ReadLoan } from './Loans'
 import styled from 'styled-components'
 
 
@@ -27,7 +27,8 @@ const AppRoutes = () => {
                 <Route path={"customers/:customerId/update"} element={<UpdateCustomer />} />
                 <Route path={"customers/:customerId"} element={<ReadCustomer />} />
                 <Route path={"loans"} element={<Loans />} />
-                <Route path={"loans/create"} element={<CreateLoan />} />
+                <Route path={"loans/create/:customerId"} element={<CreateLoan />} />
+                <Route path={"loans/:loanId"} element={<ReadLoan />} />
             </Routes>
         </MainContainer>
     )

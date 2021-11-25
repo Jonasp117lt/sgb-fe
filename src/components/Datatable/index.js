@@ -17,6 +17,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ViewIcon from '@mui/icons-material/RemoveRedEye';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { Link } from 'react-router-dom'
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -280,8 +281,8 @@ export default function EnhancedTable(props) {
                                                     anchorEl={anchorEl}
                                                     onClose={handleCloseMenu}
                                                 >
-                                                    {options.read && <MenuItem><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
-                                                    {options.update && <MenuItem><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
+                                                    {options.read && <MenuItem component={Link} to={`${row.id}`}><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
+                                                    {options.update && <MenuItem component={Link} to={`${row.id}/update`}><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
                                                     {options.delete && <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>}
                                                 </Menu>
                                             </TableCell>}

@@ -17,6 +17,7 @@ export const Customers = () => {
         <Card
             title='Clientes'
             content={CustomersTable}
+            link="create"
         />
     )
 }

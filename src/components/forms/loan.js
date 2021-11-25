@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Button, Stack } from '@mui/material'
-import { defaultLoan } from '../../constants/models'
-import { select_books } from '../../constants/mockupData'
+import { defaultLoan, defaultCustomer } from '../../constants/models'
+import { select_books, single_customer } from '../../constants/mockupData'
 import TextField from '../../components/TextField'
 import Select from '../../components/Select/Autocomplete'
 import _ from 'lodash'
@@ -9,6 +9,13 @@ import _ from 'lodash'
 const LoanForm = props => {
     const { readOnly } = props
     const [loan, setLoan] = React.useState(props.data || defaultLoan())
+    const [customer, setCustomer] = React.useState(defaultCustomer())
+
+    React.useEffect(() => {
+        if (props.data) {
+            setLoan(props.data)
+        }
+    }, [props.data])
 
     const handleChange = (e) => {
         const loanCopy = JSON.parse(JSON.stringify(loan))
@@ -25,7 +32,15 @@ const LoanForm = props => {
         }
     }
 
-    console.log(loan)
+    const getCustomer = () => {
+        setCustomer(single_customer)
+    }
+
+    React.useEffect(() => {
+        getCustomer()
+    }, [])
+
+    const customerName = customer?.person?.name ? `${customer?.person?.name} ${customer?.person?.lastname}` : ''
 
     return (
         <Grid container>
@@ -34,6 +49,13 @@ const LoanForm = props => {
                     <TextField
                         label='Número de libros'
                         value={loan.book_num}
+                        disabled
+                    />
+                </Grid>
+                <Grid item xs={12}>
+                    <TextField
+                        label='Nombre del cliente'
+                        value={customerName}
                         disabled
                     />
                 </Grid>

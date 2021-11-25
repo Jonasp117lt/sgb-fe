@@ -4,7 +4,7 @@ export const defaultBook = () => ({
     author: '',
     edition: '',
     editorial: '',
-    inventory: '',
+    inventory: 0,
 })
 
 export const defaultEmployee = () => ({
