@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from "../../components/Card"
 import BookForm from '../../components/forms/book'
 import api from "../../services/api"
@@ -12,10 +12,8 @@ export const CreateBook = () => {
         const response = await api.createBook(book)
         if (response.success) {
             swal.requestSuccess("Libro Registrado!", "El libro se ha registrado correctamente")
-            .then(()=>{
-                navigate("/books")
-            })
-        } else{
+                .then(() => navigate("/books"))
+        } else {
             swal.requestError("Oops!", "Ha ocurrido un problema intentando registrar el libro, intentalo nuevamente")
         }
     }

@@ -4,10 +4,13 @@ import { defaultCustomer } from '../../constants/models'
 import TextField from '../../components/TextField'
 import { Link } from 'react-router-dom'
 import _ from 'lodash'
+import { CircularProgress } from '@mui/material'
+import Loans from '../../routes/Loans'
 
 const CustomerForm = props => {
     const { readOnly } = props
     const [customer, setCustomer] = React.useState(props.data || defaultCustomer())
+    const [loading, setLoading] = React.useState(false)
 
     const handleChange = (e) => {
         const customerCopy = _.cloneDeep(customer)
@@ -16,8 +19,10 @@ const CustomerForm = props => {
     }
 
     const handleSubmit = () => {
+        setLoading(true)
         if (props.onSubmit) {
             props.onSubmit(customer)
+                .then(() => setLoading(false))
         }
     }
 
@@ -85,7 +90,6 @@ const CustomerForm = props => {
                         name='debt'
                         value={customer.debt}
                         disabled
-                        type='number'
                     />
                 </Grid>
                 <Grid item xs={6}>
@@ -93,12 +97,16 @@ const CustomerForm = props => {
                 </Grid>
                 {!readOnly && <Grid item xs={12}>
                     <Stack direction='row' spacing={2}>
-                        <Button variant='contained' xs={{ mr: 2 }} onClick={handleSubmit}>Subir</Button>
-                        <Button variant='contained' color='error'>Cancelar</Button>
+                        <Button variant='contained' xs={{ mr: 2 }} onClick={handleSubmit} disabled={loading}>Subir {loading && <CircularProgress />}</Button>
+                        <Button variant='contained' color='error' disabled={loading}>Cancelar {loading && <CircularProgress />}</Button>
                     </Stack>
                 </Grid>}
+                {readOnly && < Grid item xs={12}>
+                    <Typography>Préstamos</Typography>
+                    <Loans customerId={customer.id} />
+                </Grid>}
             </Grid>
-        </Grid>
+        </Grid >
     )
 }
 

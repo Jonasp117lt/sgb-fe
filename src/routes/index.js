@@ -11,7 +11,8 @@ import { getToken } from '../services/auth'
 
 const MainContainer = styled.div.attrs({ className: "MainContainer" })`
   margin-top: 76.88px;
-  height: -webkit-fill-available;
+  height: auto;
+  min-height: -webkit-fill-available;
   padding: 2rem;
   background-color: #EAEEF3;
 `;
@@ -22,8 +23,6 @@ const AppRoutes = () => {
     const location = useLocation()
     const navigate = useNavigate()
     const redirectRoute = token ? "books" : "login"
-    console.log(location)
-    console.log(redirectRoute)
     
     React.useEffect(() => {
         if (location.pathname === "/") {

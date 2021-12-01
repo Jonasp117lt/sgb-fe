@@ -46,7 +46,7 @@ export const updateEmployee = async (employee) => await fetchDataRequest(`api/em
 export const deleteEmployee = async (id) => await fetchDataRequest(`api/employees/${id}`, "DELETE")
 
 export const createLoan = async (loan, customerId) => await fetchDataRequest(`api/loans/${customerId}`, "POST", loan)
-export const getLoans = async (customerId) => await fetchDataRequest(`api/loans?${customerId}`)
+export const getLoans = async (customerId) => await fetchDataRequest(`api/loans${customerId ? `?customerId=${customerId || ""}` : ""}`)
 export const getLoan = async (id) => await fetchDataRequest(`api/loans/${id}`)
 
 export const createReturn = async (_return, loanId) => await fetchDataRequest(`api/returns/${loanId}`, "POST", _return)

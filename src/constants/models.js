@@ -52,8 +52,6 @@ export const defaultEmail = () => ({
 export const defaultReturn = () => ({
     id: '',
     loan: defaultLoan(),
-    book_num: '',
-    books: [],
     payment: '',
     date: '',
 })

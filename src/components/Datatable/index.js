@@ -249,8 +249,6 @@ export default function EnhancedTable(props) {
 
     let data = rows.filter(row => Object.values(row).some(value => String(value).toLowerCase().includes(search.toLowerCase())))
 
-    console.log(data)
-
     let pageData = stableSort(data, getComparator(order, orderBy))
         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 
@@ -287,7 +285,7 @@ export default function EnhancedTable(props) {
                                         // onClick={(event) => handleClick(event, row.name)}
                                         aria-checked={isItemSelected}
                                         tabIndex={-1}
-                                        key={row.name}
+                                        key={`${row.name}-${row.id}`}
                                         selected={isItemSelected}
                                     >
                                         {/* <TableCell padding="checkbox">
@@ -326,7 +324,7 @@ export default function EnhancedTable(props) {
                                             >
                                                 {options.read && <MenuItem component={Link} to={`${row.id}`}><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
                                                 {options.update && <MenuItem component={Link} to={`${row.id}/update`}><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
-                                                {options.return && <MenuItem component={Link} to={`${row.id}/return`}><ReturnIcon sx={{ mr: 1 }} fontSize='small' />Registrar Devolución</MenuItem>}
+                                                {options.return && <MenuItem component={Link} to={`/loans/${row.id}/return`}><ReturnIcon sx={{ mr: 1 }} fontSize='small' />Registrar Devolución</MenuItem>}
                                                 {options.loan && <MenuItem component={Link} to={`/loans/create/${row.id}`}><LoanIcon sx={{ mr: 1 }} fontSize='small' />Solicitar Préstamo</MenuItem>}
                                                 {options.delete && <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>}
                                             </Menu>

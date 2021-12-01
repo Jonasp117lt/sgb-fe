@@ -9,7 +9,8 @@ const CustomCard = (props) => {
         title,
         content,
         link,
-        divider
+        divider,
+        withoutHeader
     } = props
 
     const CardTitle = () => (
@@ -20,14 +21,15 @@ const CustomCard = (props) => {
             <Button variant="contained" component={Link} to={`${link}`} > + Nuevo</Button>
         </div >
     )
+    const Wrapper = withoutHeader ? props => <div {...props}>{props.children}</div> : Card
     return (
-        <Card sx={{ height: 'max-content', padding: "30px" }}>
-            <CardHeader title={link ? <CardTitle /> : title} sx={{ textAlign: 'start', p: 0, mb: divider ? 1.5 : 2 }} />
+        <Wrapper sx={{ height: 'max-content', padding: "30px" }}>
+            {!withoutHeader && <CardHeader title={link ? <CardTitle /> : title} sx={{ textAlign: 'start', p: 0, mb: divider ? 1.5 : 2 }} />}
             {divider && <Divider sx={{ mb: 1 }} />}
             <CardContent sx={{ textAlign: 'start', p: 0 }}>
                 {content}
             </CardContent>
-        </Card>
+        </Wrapper>
     )
 }
 

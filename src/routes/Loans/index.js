@@ -1,24 +1,47 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Card from "../../components/Card"
 import Datatable from "../../components/Datatable"
 import { loanHeaders } from '../../constants/tableHeaders'
-import { loans } from '../../constants/mockupData'
+import api from "../../services/api"
+import swal from "../../utils/alerts"
+import { LinearProgress } from '@mui/material'
 
-const formatLoanData = data => data.map(loan => ({
-    ...loan,
-    customer_name: `${loan.customer?.person?.name} ${loan.customer?.person?.lastname}`,
-    start_date: new Date(loan.start_date).toLocaleDateString(),
-    end_date: new Date(loan.end_date).toLocaleDateString(),
-    debt: `$${(loan.debt || 0).toFixed(2)}`
-}))
+const formatData = (data) => data.map(loan => {
+    loan.start_date = new Date(loan.start_date).toLocaleDateString()
+    loan.end_date = new Date(loan.end_date).toLocaleDateString()
+    loan.customer_name = `${loan.customer?.person?.name} ${loan.customer?.person?.lastname}`
+    const debt = `$${(parseFloat(loan.debt || 0)).toFixed(2)}`
+    return { ...loan, debt }
+})
 
-export const Loans = () => {
-    const formattedData = formatLoanData(loans)
-    const LoansTable = <Datatable headers={loanHeaders} rows={formattedData} noBorder options={{ read: true, return: true }} />
+export const Loans = ({ customerId }) => {
+    const [loans, setLoans] = useState([])
+    const [loading, setLoading] = useState(false)
+    const options = { read: true, delete: false, update: false, return: true }
+    const formattedLoans = formatData(loans)
+    const LoansTable = !loading ? <Datatable headers={loanHeaders} rows={formattedLoans} noBorder options={options} /> : <LinearProgress />
+
+    const getLoans = async () => {
+        const response = await api.getLoans(customerId)
+        if (response.success) {
+            setLoans(response.loans)
+        } else {
+            swal.requestError("Oops!", "Ha ocurrido un error intentando retornar los préstamos, inténtalo de nuevo")
+        }
+    }
+
+    useEffect(() => {
+        setLoading(true)
+        getLoans()
+        setLoading(false)
+    }, [])
+
     return (
         <Card
-            title='Préstamos activos'
+            title='Préstamos'
             content={LoansTable}
+            withoutHeader={!!customerId}
+            link={"create"}
             divider
         />
     )
@@ -26,5 +49,4 @@ export const Loans = () => {
 
 export default Loans
 export * from './create'
-// export * from './update'
 export * from './read'

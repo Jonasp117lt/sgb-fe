@@ -39,7 +39,6 @@ const LoginForm = () => {
         else {
             swal.requestError("Ooops!", "Hubo un error al intentar iniciar sesión, inténtalo de nuevo")
         }
-        console.log(response)
     }
 
     return (

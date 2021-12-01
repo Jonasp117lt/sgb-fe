@@ -4,10 +4,12 @@ import { defaultBook } from '../../constants/models'
 import TextField from '../../components/TextField'
 import _ from 'lodash'
 import { Link } from 'react-router-dom'
+import { CircularProgress } from '@mui/material'
 
 const BookForm = props => {
     const { readOnly } = props
     const [book, setBook] = React.useState(props.data || defaultBook())
+    const [loading, setLoading] = React.useState(false)
 
     const handleChange = (e) => {
         const bookCopy = _.cloneDeep(book)
@@ -16,8 +18,10 @@ const BookForm = props => {
     }
 
     const handleSubmit = () => {
+        setLoading(true)
         if (props.onSubmit) {
             props.onSubmit(book)
+                .then(() => setLoading(false))
         }
     }
 
@@ -73,8 +77,8 @@ const BookForm = props => {
                 </Grid>
                 {!readOnly && <Grid item xs={12}>
                     <Stack direction='row' spacing={2}>
-                        <Button variant='contained' xs={{ mr: 2 }} onClick={handleSubmit}>Subir</Button>
-                        <Button variant='contained' component={Link} to="/books" color='error'>Cancelar</Button>
+                        <Button variant='contained' xs={{ mr: 2 }} onClick={handleSubmit} disabled={loading}>Subir {loading && <CircularProgress />}</Button>
+                        <Button variant='contained' component={Link} to="/books" color='error' disabled={loading}>Cancelar {loading && <CircularProgress />}</Button>
                     </Stack>
                 </Grid>}
             </Grid>

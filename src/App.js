@@ -11,12 +11,12 @@ import MainRoutes from './routes'
 function App() {
   return (
     <MainProvider>
-       <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <div className="App">
-        <SideBar />
-        <Header />
-        <MainRoutes />
-      </div>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <div className="App" style={{ overflow: "auto" }}>
+          <SideBar />
+          <Header />
+          <MainRoutes />
+        </div>
       </LocalizationProvider>
     </MainProvider>
   );
