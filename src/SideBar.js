@@ -9,7 +9,7 @@ import LoanIcon from '@mui/icons-material/LocalLibrary';
 import { deleteToken } from './services/auth'
 
 const Drawer = styled(UnstyledDrawer)`
-    & .css-4t3x6l-MuiPaper-root-MuiDrawer-paper{
+    & .MuiPaper-root{
         background-color: #363636;
         width: 200px;
         padding-top: 76.88px;
