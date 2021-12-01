@@ -10,7 +10,7 @@ const CustomerForm = props => {
     const [customer, setCustomer] = React.useState(props.data || defaultCustomer())
 
     const handleChange = (e) => {
-        const customerCopy = JSON.parse(JSON.stringify(customer))
+        const customerCopy = _.cloneDeep(customer)
         _.set(customerCopy, e.target.name, e.target.value)
         setCustomer(customerCopy)
     }

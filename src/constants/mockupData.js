@@ -1,10 +1,11 @@
-const createBook = (id, name, author, edition, editorial, inventory) => ({
+const createBook = (id, name, author, edition, editorial, inventory_total) => ({
     id,
     name,
     author,
     edition,
     editorial,
-    inventory,
+    inventory_total,
+    inventory: inventory_total,
 })
 
 export const single_book = createBook('1', 'Harry Potter', 'J.K. Rowling', '3', 'Salamandra', 5)
@@ -67,10 +68,10 @@ export const customers = [
     createCustomer('10', persons[9], 30, true),
 ]
 
-const createLoan = (id, book_num, book_ids, customer, start_date, end_date, active, debt) => ({
+const createLoan = (id, book_num, books, customer, start_date, end_date, active, debt) => ({
     id,
     book_num,
-    book_ids,
+    books,
     customer,
     start_date,
     end_date,
@@ -78,11 +79,30 @@ const createLoan = (id, book_num, book_ids, customer, start_date, end_date, acti
     debt,
 })
 
-export const single_loan = createLoan('1', 3, ['1', '2', '3'], single_customer, '2021-11-17T05:04:37.520Z', '2021-11-17T05:04:37.520Z', true, 20)
+export const single_loan = createLoan('1', 3, [books[0], books[1], books[2]], single_customer, '2021-11-17T05:04:37.520Z', '2021-11-17T05:04:37.520Z', true, 20)
 
 export const loans = [
-    createLoan('1', 3, ['1', '2', '3'], customers[0], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 20),
-    createLoan('2', 4, ['2', '3', '4'], customers[1], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 15),
-    createLoan('3', 5, ['1', '2', '3', '4', '5'], customers[2], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 40),
-    createLoan('4', 2, ['4', '5'], customers[3], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 50),
+    createLoan('1', 3, [books[0], books[1], books[2]], customers[0], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 20),
+    createLoan('2', 4, [books[1], books[2], books[3]], customers[1], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 15),
+    createLoan('3', 5, [books[0], books[1], books[2], books[3], books[4]], customers[2], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 40),
+    createLoan('4', 2, [books[3], books[4]], customers[3], '2021-11-17T05:04:37.520Z', '2021-11-19T05:04:37.520Z', true, 50),
 ]
+
+const createReturn = (id, loan, book_num, books, payment, date) => ({
+    id,
+    loan,
+    book_num,
+    books,
+    payment,
+    date,
+})
+
+export const single_return = createReturn('1', single_loan, 3, [books[0], books[1], books[2]], 20, '2021-11-17T05:04:37.520Z')
+
+export const returns = [
+    createReturn('1', single_loan, 3, [books[0], books[1], books[2]], 20, '2021-11-17T05:04:37.520Z'),
+    createReturn('2', single_loan, 3, [books[1], books[2], books[3]], customers[1], 20, '2021-11-17T05:04:37.520Z'),
+    createReturn('3', single_loan, 3, [books[0], books[1], books[2], books[3], books[4], customers[2]], 20, '2021-11-17T05:04:37.520Z'),
+    createReturn('4', single_loan, 3, [books[3], books[4]], customers[3], 20, '2021-11-17T05:04:37.520Z'),
+]
+

@@ -3,9 +3,12 @@ import React from "react";
 import styled from 'styled-components'
 import MenuIcon from '@mui/icons-material/Menu';
 import MainProvider from './context'
+import { getToken } from "./services/auth"
 
 const LogoText = styled.h1`
     font-family: 'Squada One', cursive;
+    user-select: none;
+    cursor: default;
 `;
 
 export const Logo = () =>
@@ -19,13 +22,15 @@ const LogoContainer = styled.div`
 
 const HeaderTitle = styled.h2`
     font-size: 20px;
+    cursor: default;
     font-weight: normal;
 `;
 
 
-const HeaderContent = ({ toggle }) =>
-    <Toolbar>
-        <IconButton
+const HeaderContent = ({ toggle }) => {
+    const token = getToken()
+    return <Toolbar>
+        {token && <IconButton
             onClick={toggle}
             edge='end'
             color='inherit'
@@ -35,11 +40,13 @@ const HeaderContent = ({ toggle }) =>
         >
             <MenuIcon />
         </IconButton>
+        }
         <LogoContainer>
             <Logo />
         </LogoContainer>
         <HeaderTitle>Sistema de Gestión de Biblioteca</HeaderTitle>
     </Toolbar>;
+}
 
 
 const Header = () => {

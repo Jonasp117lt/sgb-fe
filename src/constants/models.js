@@ -4,15 +4,10 @@ export const defaultBook = () => ({
     author: '',
     edition: '',
     editorial: '',
+    inventory_total: 0,
     inventory: 0,
 })
 
-export const defaultEmployee = () => ({
-    id: '',
-    person_id: '',
-    username: '',
-    password: '',
-})
 
 export const defaultPerson = () => ({
     id: '',
@@ -23,6 +18,13 @@ export const defaultPerson = () => ({
     address: '',
 })
 
+export const defaultEmployee = () => ({
+    id: '',
+    person: defaultPerson(),
+    username: '',
+    password: '',
+})
+
 export const defaultCustomer = () => ({
     id: '',
     has_books: false,
@@ -30,28 +32,28 @@ export const defaultCustomer = () => ({
     person: defaultPerson(),
 })
 
-export const defaultEmail = () => ({
-    id: '',
-    loan_id: '',
-    send_date: '',
-})
-
 export const defaultLoan = () => ({
     id: '',
     book_num: '',
-    book_ids: [],
+    books: [],
     customer: defaultCustomer(),
-    start_date: '',
+    start_date: new Date().toISOString(),
     end_date: '',
     active: '',
     debt: 0,
 })
 
+export const defaultEmail = () => ({
+    id: '',
+    loan: defaultLoan(),
+    send_date: '',
+})
+
 export const defaultReturn = () => ({
     id: '',
-    loan_id: '',
+    loan: defaultLoan(),
     book_num: '',
-    book_ids: [],
+    books: [],
     payment: '',
     date: '',
 })

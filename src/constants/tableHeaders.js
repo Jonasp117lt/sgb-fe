@@ -31,9 +31,15 @@ export const bookHeaders = [
     },
     {
         id: 'inventory',
-        numeric: false,
+        numeric: true,
         disablePadding: true,
-        label: 'Inventario',
+        label: 'Inventario disponible',
+    },
+    {
+        id: 'inventory_total',
+        numeric: true,
+        disablePadding: true,
+        label: 'Inventario total',
     },
 ]
 

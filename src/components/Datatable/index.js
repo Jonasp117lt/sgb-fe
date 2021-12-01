@@ -17,6 +17,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ViewIcon from '@mui/icons-material/RemoveRedEye';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ReturnIcon from '@mui/icons-material/SettingsBackupRestore';
+import LoanIcon from '@mui/icons-material/LocalLibrary';
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from '@mui/material/TextField';
+import Toolbar from '@mui/material/Toolbar';
+import InputAdornment from '@mui/material/InputAdornment';
 import { Link } from 'react-router-dom'
 
 function descendingComparator(a, b, orderBy) {
@@ -91,7 +97,7 @@ function EnhancedTableHead(props) {
                         </TableSortLabel>
                     </TableCell>
                 ))}
-                {(options.delete || options.read || options.update) && <TableCell
+                {Object.values(options).includes(true) && <TableCell
                     align={'right'}
                     padding={'none'}
                     sortDirection={false}
@@ -154,12 +160,38 @@ function EnhancedTableHead(props) {
 //     );
 // };
 
+
+const SearchBar = ({ search, setSearch }) => {
+    return (<Toolbar
+        sx={{
+            pl: { sm: 0 },
+            pr: { xs: 1, sm: 1 },
+        }}
+    >
+        <TextField
+            label='Búsqueda'
+            variant='standard'
+            size='small'
+            fullWidth
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            InputProps={{
+                startAdornment: (
+                    <InputAdornment position='start'>
+                        <SearchIcon />
+                    </InputAdornment>
+                )
+            }} />
+    </Toolbar>)
+}
+
 export default function EnhancedTable(props) {
     const {
         headers: headCells,
         rows,
         noBorder,
-        options = { delete: true, update: true, read: true }
+        options = { delete: true, update: true, read: true, return: false, loan: false },
+        noSearch = false
     } = props
     const [order, setOrder] = React.useState('asc');
     const [orderBy, setOrderBy] = React.useState('calories');
@@ -168,6 +200,7 @@ export default function EnhancedTable(props) {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [openMenu, setOpenMenu] = React.useState(null);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [search, setSearch] = React.useState('');
 
     const handleClickMenu = (e, id) => {
         setAnchorEl(e.currentTarget)
@@ -203,6 +236,10 @@ export default function EnhancedTable(props) {
         setPage(0);
     };
 
+    const handleSearch = (newSearch) => {
+        setSearch(newSearch)
+        setPage(0)
+    }
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -210,10 +247,18 @@ export default function EnhancedTable(props) {
     const emptyRows =
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
+    let data = rows.filter(row => Object.values(row).some(value => String(value).toLowerCase().includes(search.toLowerCase())))
+
+    console.log(data)
+
+    let pageData = stableSort(data, getComparator(order, orderBy))
+        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2, boxShadow: noBorder ? 'none' : '', marginBottom: 0 }}>
                 {/* <EnhancedTableToolbar numSelected={selected.length} title={title} /> */}
+                {!noSearch && <SearchBar search={search} setSearch={handleSearch} />}
                 <TableContainer >
                     <Table
                         sx={{ minWidth: 750 }}
@@ -233,21 +278,19 @@ export default function EnhancedTable(props) {
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
                  rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                            {pageData.map((row, index) => {
+                                const isItemSelected = isSelected(row.name);
 
-                                    return (
-                                        <TableRow
-                                            hover
-                                            // onClick={(event) => handleClick(event, row.name)}
-                                            aria-checked={isItemSelected}
-                                            tabIndex={-1}
-                                            key={row.name}
-                                            selected={isItemSelected}
-                                        >
-                                            {/* <TableCell padding="checkbox">
+                                return (
+                                    <TableRow
+                                        hover
+                                        // onClick={(event) => handleClick(event, row.name)}
+                                        aria-checked={isItemSelected}
+                                        tabIndex={-1}
+                                        key={row.name}
+                                        selected={isItemSelected}
+                                    >
+                                        {/* <TableCell padding="checkbox">
                                                 <Checkbox
                                                     color="primary"
                                                     checked={isItemSelected}
@@ -256,39 +299,41 @@ export default function EnhancedTable(props) {
                                                     }}
                                                 />
                                             </TableCell> */}
-                                            {headCells.map(headCell => (
-                                                <TableCell
-                                                    key={headCell.id}
-                                                    align={headCell.numeric ? 'right' : 'left'}
-                                                    padding={headCell.disablePadding ? 'none' : 'normal'}
-                                                    sortDirection={orderBy === headCell.id ? order : false}
-                                                >
-                                                    {row[headCell.id]}
-                                                </TableCell>
-                                            ))}
-                                            {(options.delete || options.read || options.update) && <TableCell
-                                                align={'right'}
-                                                padding={'none'}
-                                                sortDirection={false}
+                                        {headCells.map(headCell => (
+                                            <TableCell
+                                                key={headCell.id}
+                                                align={headCell.numeric ? 'right' : 'left'}
+                                                padding={headCell.disablePadding ? 'none' : 'normal'}
+                                                sortDirection={orderBy === headCell.id ? order : false}
                                             >
-                                                <IconButton
-                                                    onClick={e => handleClickMenu(e, row.id)}
-                                                >
-                                                    <MenuIcon />
-                                                </IconButton>
-                                                <Menu
-                                                    open={openMenu === row.id}
-                                                    anchorEl={anchorEl}
-                                                    onClose={handleCloseMenu}
-                                                >
-                                                    {options.read && <MenuItem component={Link} to={`${row.id}`}><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
-                                                    {options.update && <MenuItem component={Link} to={`${row.id}/update`}><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
-                                                    {options.delete && <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>}
-                                                </Menu>
-                                            </TableCell>}
-                                        </TableRow>
-                                    );
-                                })}
+                                                {row[headCell.id]}
+                                            </TableCell>
+                                        ))}
+                                        {Object.values(options).includes(true) && <TableCell
+                                            align={'right'}
+                                            padding={'none'}
+                                            sortDirection={false}
+                                        >
+                                            <IconButton
+                                                onClick={e => handleClickMenu(e, row.id)}
+                                            >
+                                                <MenuIcon />
+                                            </IconButton>
+                                            <Menu
+                                                open={openMenu === row.id}
+                                                anchorEl={anchorEl}
+                                                onClose={handleCloseMenu}
+                                            >
+                                                {options.read && <MenuItem component={Link} to={`${row.id}`}><ViewIcon sx={{ mr: 1 }} fontSize='small' /> Ver</MenuItem>}
+                                                {options.update && <MenuItem component={Link} to={`${row.id}/update`}><EditIcon sx={{ mr: 1 }} fontSize='small' />Editar</MenuItem>}
+                                                {options.return && <MenuItem component={Link} to={`${row.id}/return`}><ReturnIcon sx={{ mr: 1 }} fontSize='small' />Registrar Devolución</MenuItem>}
+                                                {options.loan && <MenuItem component={Link} to={`/loans/create/${row.id}`}><LoanIcon sx={{ mr: 1 }} fontSize='small' />Solicitar Préstamo</MenuItem>}
+                                                {options.delete && <MenuItem sx={{ color: 'red' }}><DeleteIcon sx={{ mr: 1 }} fontSize='small' />Eliminar</MenuItem>}
+                                            </Menu>
+                                        </TableCell>}
+                                    </TableRow>
+                                );
+                            })}
                             {emptyRows > 0 && (
                                 <TableRow
                                     style={{
@@ -304,7 +349,7 @@ export default function EnhancedTable(props) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={data.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onPageChange={handleChangePage}

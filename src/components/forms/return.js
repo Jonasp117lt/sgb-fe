@@ -1,41 +1,40 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import { Grid, Button, Stack } from '@mui/material'
-import { defaultLoan } from '../../constants/models'
-import { books, single_customer } from '../../constants/mockupData'
+import { Link } from 'react-router-dom'
+import { defaultReturn } from '../../constants/models'
 import TextField from '../../components/TextField'
 import Select from '../../components/Select/Autocomplete'
-import DatePicker from '../../components/DatePicker'
 import _ from 'lodash'
 
-const LoanForm = props => {
+const ReturnForm = props => {
     const { readOnly } = props
-    const [loan, setLoan] = React.useState(props.data || defaultLoan())
-
-    let { customer } = props
-    if (readOnly) customer = loan.customer
+    const [_return, setReturn] = React.useState(props.data || defaultReturn())
 
     React.useEffect(() => {
         if (props.data) {
-            setLoan(props.data)
+            setReturn(props.data)
         }
     }, [props.data])
 
+    console.log(_return)
+
     const handleChange = (e) => {
-        const loanCopy = _.cloneDeep(loan)
-        _.set(loanCopy, e.target.name, e.target.value)
-        if (e.target.name === 'books') {
-            _.set(loanCopy, 'book_num', e.target.value.length)
+        const { value, name } = e.target
+        const returnCopy = _.cloneDeep(_return)
+        _.set(returnCopy, name, value)
+        if (name === 'books') {
+            _.set(returnCopy, 'book_num', value.length)
         }
-        setLoan(loanCopy)
+        setReturn(returnCopy)
     }
 
     const handleSubmit = () => {
         if (props.onSubmit) {
-            props.onSubmit(loan)
+            props.onSubmit(_return)
         }
     }
 
+    const { customer, books } = _return.loan
     const customerName = customer?.person?.name ? `${customer?.person?.name} ${customer?.person?.lastname}` : ''
 
     return (
@@ -44,7 +43,7 @@ const LoanForm = props => {
                 <Grid item xs={12}>
                     <TextField
                         label='Número de libros'
-                        value={loan.book_num}
+                        value={_return.book_num}
                         disabled
                     />
                 </Grid>
@@ -63,19 +62,12 @@ const LoanForm = props => {
                         Ver cliente</Link>
                 </Grid>
                 <Grid item xs={12}>
-                    <DatePicker
-                        label='Fecha'
-                        value={loan.start_date}
-                        disabled
-                    />
-                </Grid>
-                <Grid item xs={12}>
                     <Select
                         disableCloseOnSelect
                         multiple
                         label='Libros'
                         name='books'
-                        value={loan.books}
+                        value={_return.books}
                         options={books}
                         onChange={(e, value) => handleChange({ target: { name: 'books', value } })}
                         disabled={readOnly}
@@ -92,4 +84,4 @@ const LoanForm = props => {
     )
 }
 
-export default LoanForm
+export default ReturnForm

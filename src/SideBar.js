@@ -1,11 +1,12 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { Drawer as UnstyledDrawer, List, ListItem, ListItemText, Divider } from '@mui/material'
+import { Drawer as UnstyledDrawer, List, ListItem, ListItemText, Divider, Button } from '@mui/material'
 import MainProvider from './context'
 import { Link, useLocation } from 'react-router-dom'
 import CustomerIcon from '@mui/icons-material/Person';
 import BooksIcon from '@mui/icons-material/LibraryBooks';
 import LoanIcon from '@mui/icons-material/LocalLibrary';
+import { deleteToken } from './services/auth'
 
 const Drawer = styled(UnstyledDrawer)`
     & .css-4t3x6l-MuiPaper-root-MuiDrawer-paper{
@@ -60,7 +61,13 @@ const SideBar = () => {
                 {links.map((link, index) => {
                     const Icon = link.icon
                     return (
-                        <ListItem component={Link} to={`/${link.path}`} key={`key-${index + 1}`} className={activePath === link.path ? 'active' : ''}>
+                        <ListItem
+                            component={Link}
+                            to={`/${link.path}`}
+                            key={`key-${index + 1}`}
+                            onClick={() => setOpenSideBar(false)}
+                            className={activePath === link.path ? 'active' : ''}
+                        >
                             <Icon sx={{ mr: 2 }} />
                             <ListItemText>
                                 {link.name}
@@ -68,6 +75,9 @@ const SideBar = () => {
                         </ListItem>
                     )
                 })}
+                <ListItem>
+                    <Button component={Link} to="/" onClick={() => { deleteToken(); setOpenSideBar(false) }}>Cerrar Sesión</Button>
+                </ListItem>
             </List>
         </Drawer>
     </div>

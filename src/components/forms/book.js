@@ -3,13 +3,14 @@ import { Grid, Button, Stack } from '@mui/material'
 import { defaultBook } from '../../constants/models'
 import TextField from '../../components/TextField'
 import _ from 'lodash'
+import { Link } from 'react-router-dom'
 
 const BookForm = props => {
     const { readOnly } = props
     const [book, setBook] = React.useState(props.data || defaultBook())
 
     const handleChange = (e) => {
-        const bookCopy = JSON.parse(JSON.stringify(book))
+        const bookCopy = _.cloneDeep(book)
         _.set(bookCopy, e.target.name, e.target.value)
         setBook(bookCopy)
     }
@@ -62,8 +63,8 @@ const BookForm = props => {
                 <Grid item xs={12}>
                     <TextField
                         label='Cantidad'
-                        name='inventory'
-                        value={book.inventory}
+                        name='inventory_total'
+                        value={book.inventory_total}
                         onChange={handleChange}
                         disabled={readOnly}
                         type='number'
@@ -73,7 +74,7 @@ const BookForm = props => {
                 {!readOnly && <Grid item xs={12}>
                     <Stack direction='row' spacing={2}>
                         <Button variant='contained' xs={{ mr: 2 }} onClick={handleSubmit}>Subir</Button>
-                        <Button variant='contained' color='error'>Cancelar</Button>
+                        <Button variant='contained' component={Link} to="/books" color='error'>Cancelar</Button>
                     </Stack>
                 </Grid>}
             </Grid>

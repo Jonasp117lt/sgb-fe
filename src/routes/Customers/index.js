@@ -12,12 +12,14 @@ const formatCustomerData = data => data.map(customer => ({
 
 export const Customers = () => {
     const formattedData = formatCustomerData(customers)
-    const CustomersTable = <Datatable title='Inventario' headers={customerHeaders} rows={formattedData} noBorder />
+    const options = { read: true, delete: true, update: true, loan: true }
+    const CustomersTable = <Datatable headers={customerHeaders} rows={formattedData} noBorder options={options} />
     return (
         <Card
             title='Clientes'
             content={CustomersTable}
             link="create"
+            divider
         />
     )
 }
