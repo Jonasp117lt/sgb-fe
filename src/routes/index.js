@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Customers, CreateCustomer, UpdateCustomer, ReadCustomer } from './Customers'
 import { Books, CreateBook, UpdateBook, ReadBook } from './Books'
 import { Loans, CreateLoan, ReadLoan } from './Loans'
+import { CreateEmployee } from './Employees'
 import { CreateReturn } from './Returns'
 import { Login } from "./Login"
 import { getToken } from '../services/auth'
@@ -46,6 +47,7 @@ const AppRoutes = () => {
                     <Route path={"loans/create/:customerId"} element={<CreateLoan />} />
                     <Route path={"loans/:loanId"} element={<ReadLoan />} />
                     <Route path={"loans/:loanId/return"} element={<CreateReturn />} />
+                    <Route path={"user/create"} element={<CreateEmployee />} />
                 </> :
                     <>
                         <Route path={"login"} element={<Login />} />

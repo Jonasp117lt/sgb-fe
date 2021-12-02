@@ -10,6 +10,7 @@ const formatData = (data) => data.map(loan => {
     loan.start_date = new Date(loan.start_date).toLocaleDateString()
     loan.end_date = new Date(loan.end_date).toLocaleDateString()
     loan.customer_name = `${loan.customer?.person?.name} ${loan.customer?.person?.lastname}`
+    loan.is_active = loan.active ? "No" : "Si"
     const debt = `$${(parseFloat(loan.debt || 0)).toFixed(2)}`
     return { ...loan, debt }
 })
@@ -41,7 +42,6 @@ export const Loans = ({ customerId }) => {
             title='Préstamos'
             content={LoansTable}
             withoutHeader={!!customerId}
-            link={"create"}
             divider
         />
     )

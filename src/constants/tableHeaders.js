@@ -107,4 +107,10 @@ export const loanHeaders = [
         disablePadding: true,
         label: 'Adeudo',
     },
+    {
+        id: 'is_active',
+        numeric: false,
+        disablePadding: true,
+        label: 'Devuelto',
+    },
 ]

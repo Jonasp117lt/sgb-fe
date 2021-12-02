@@ -22,11 +22,21 @@ export const CreateReturn = () => {
         }
     }
 
+    const handleSubmit = async (data) => {
+        const response = await api.createReturn(data,params.loanId)
+        if(response.success){
+            swal.requestSuccess("Devolución Registrada!", "La devolución se ha registrado correctamente")
+                .then(() => navigate("/books"))
+        }else{
+            swal.requestError("Oops!", "Ha ocurrido un problema intentando registrar la devolución, intentalo nuevamente")
+        }
+    }
+
     useEffect(() => {
         getLoan()
     }, [])
 
-    const Form = <ReturnForm loan={loan} />
+    const Form = <ReturnForm loan={loan} onSubmit={handleSubmit}/>
     return (
         <Card
             title='Registrar Devolución'

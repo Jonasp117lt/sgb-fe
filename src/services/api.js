@@ -1,7 +1,8 @@
 import { getToken } from "./auth"
 import axios from 'axios'
 
-const apiRoute = "https://api.moloch.developmers.com"
+// const apiRoute = "https://api.moloch.developmers.com"
+const apiRoute = "http://localhost:8080"
 
 export const fetchDataRequest = async (route, method = "get", data) => {
     const token = getToken()

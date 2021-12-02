@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom'
 import CustomerIcon from '@mui/icons-material/Person';
 import BooksIcon from '@mui/icons-material/LibraryBooks';
 import LoanIcon from '@mui/icons-material/LocalLibrary';
+import UserIcon from '@mui/icons-material/PersonAddAlt';
 import { deleteToken } from './services/auth'
 
 const Drawer = styled(UnstyledDrawer)`
@@ -47,6 +48,11 @@ const links = [
         name: 'Préstamos',
         path: 'loans',
         icon: LoanIcon,
+    },
+    {
+        name: 'Registrar usuario',
+        path: 'user/create',
+        icon: UserIcon,
     },
 ]
 
